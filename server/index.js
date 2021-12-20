@@ -9,11 +9,17 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
+const users=[];
+
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/create-pdf',function(req,res){
+   const user=users.find(user => user.name === req.body.name);
+
+
+    
     pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
         if(err) {
             res.send(Promise.reject());
